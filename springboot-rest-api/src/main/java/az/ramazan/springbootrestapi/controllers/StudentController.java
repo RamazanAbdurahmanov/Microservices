@@ -54,5 +54,9 @@ public class StudentController {
         return student;
 
     }
-
+// Rest API that Handles Http DELETE Request-deleting the existing resource
+    @DeleteMapping("students/{id}/delete")
+    public  String deleteStudent(@PathVariable ("id")int studentId){
+        return "Student deleted successfully";
+    }
 }
