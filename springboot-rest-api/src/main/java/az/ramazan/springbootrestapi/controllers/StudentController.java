@@ -46,4 +46,13 @@ public class StudentController {
         return student;
     }
 
+    //Rest API that Handles HTTP PUT Request-updating existing resource
+    @PutMapping("students/{id}/update")
+    public Student updateStudent(@RequestBody Student student,@PathVariable("id") int studentId){
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
+
+    }
+
 }
