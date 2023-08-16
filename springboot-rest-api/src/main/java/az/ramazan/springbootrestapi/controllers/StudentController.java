@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
     @GetMapping("student")
     public ResponseEntity<Student> getStudent() {
@@ -20,7 +21,7 @@ public class StudentController {
                 .body(student);
     }
 
-    @GetMapping("students")
+    @GetMapping
     public ResponseEntity<List<Student>> getStudents() {
         List<Student> students = new ArrayList<>();
         students.add(new Student(1, "Ramazan", "Abdurahmanov"));
@@ -29,7 +30,7 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping("students/{id}/{first-name}/{last-name}")
+    @GetMapping("{id}/{first-name}/{last-name}")
     public ResponseEntity<Student> studentPathVariable(@PathVariable("id") int studentId,
                                                        @PathVariable("first-name") String firstName,
                                                        @PathVariable("last-name") String lastName) {
@@ -37,7 +38,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("students/query")
+    @GetMapping("query")
     public ResponseEntity<Student> studentRequestVariable(@RequestParam int id,
                                                           @RequestParam String firstName,
                                                           @RequestParam String lastName) {
@@ -46,7 +47,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @PostMapping("students/create")
+    @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         System.out.println(student.getId());
@@ -56,7 +57,7 @@ public class StudentController {
     }
 
     //Rest API that Handles HTTP PUT Request-updating existing resource
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") int studentId) {
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
@@ -65,7 +66,7 @@ public class StudentController {
     }
 
     // Rest API that Handles Http DELETE Request-deleting the existing resource
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId) {
         return ResponseEntity.ok("Student deleted successfully");
     }
