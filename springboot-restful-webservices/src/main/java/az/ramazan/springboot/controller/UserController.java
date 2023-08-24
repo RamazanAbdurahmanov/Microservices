@@ -17,7 +17,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     //build create User REST API
-    @PostMapping
+    @PostMapping("create")
     public ResponseEntity<User> createUser(@RequestBody User user){
         User savedUser=userService.createUser(user);
         return  new ResponseEntity<>(savedUser, HttpStatus.CREATED);
@@ -36,11 +36,19 @@ public class UserController {
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
     //Build update user rest api
-    @PutMapping("{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long userId, @RequestBody User user){
         user.setId(userId);
         User updatedUser=userService.updateUser(user);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);
+
+    }
+    //Build Delete useer REST API
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId){
+        userService.deleteUser(userId);
+        return new ResponseEntity<>("User successfully deleted",HttpStatus.OK);
+
 
     }
 }
