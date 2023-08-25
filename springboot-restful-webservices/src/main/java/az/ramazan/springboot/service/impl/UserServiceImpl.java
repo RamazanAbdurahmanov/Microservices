@@ -1,5 +1,6 @@
 package az.ramazan.springboot.service.impl;
 
+import az.ramazan.springboot.dto.UserDto;
 import az.ramazan.springboot.entity.User;
 import az.ramazan.springboot.repository.UserRepository;
 import az.ramazan.springboot.service.UserService;
@@ -17,8 +18,24 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDto createUser(UserDto userDto) {
+        //Convert UserDto into User JPA Entity
+        User user = new User(
+                userDto.getId(),
+                userDto.getFirstName(),
+                userDto.getLastName(),
+                userDto.getEmail()
+        );
+        User savedUser = userRepository.save(user);
+        //Convert User JPA entity to UserDto
+        UserDto savedUserDto = new UserDto(
+                savedUser.getId(),
+                savedUser.getFirstName(),
+                savedUser.getLastName(),
+                savedUser.getEmail()
+        );
+
+        return savedUserDto;
     }
 
     @Override

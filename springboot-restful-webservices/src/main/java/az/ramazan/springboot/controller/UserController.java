@@ -1,5 +1,6 @@
 package az.ramazan.springboot.controller;
 
+import az.ramazan.springboot.dto.UserDto;
 import az.ramazan.springboot.entity.User;
 import az.ramazan.springboot.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,11 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("api/users")
 public class UserController {
-    private final UserService userService;
+    private  UserService userService;
     //build create User REST API
     @PostMapping("create")
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        User savedUser=userService.createUser(user);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
+        UserDto savedUser=userService.createUser(user);
         return  new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
     //build get user by id REST API
