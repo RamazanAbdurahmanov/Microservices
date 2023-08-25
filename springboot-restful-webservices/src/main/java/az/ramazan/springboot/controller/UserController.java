@@ -32,8 +32,8 @@ public class UserController {
     }
     //Build Get all users REST API
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users =userService.getAllUser();
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        List<UserDto> users =userService.getAllUser();
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
     //Build update user rest api
