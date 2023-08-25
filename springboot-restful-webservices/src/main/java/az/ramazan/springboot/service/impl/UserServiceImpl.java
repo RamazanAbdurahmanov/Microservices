@@ -2,6 +2,7 @@ package az.ramazan.springboot.service.impl;
 
 import az.ramazan.springboot.dto.UserDto;
 import az.ramazan.springboot.entity.User;
+import az.ramazan.springboot.mapper.UserMapper;
 import az.ramazan.springboot.repository.UserRepository;
 import az.ramazan.springboot.service.UserService;
 import lombok.AllArgsConstructor;
@@ -20,28 +21,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         //Convert UserDto into User JPA Entity
-        User user = new User(
-                userDto.getId(),
-                userDto.getFirstName(),
-                userDto.getLastName(),
-                userDto.getEmail()
-        );
-        User savedUser = userRepository.save(user);
+        User user = UserMapper.mapToUser(userDto);
+        User savedUser = userRepository.save(user)
+                ;
         //Convert User JPA entity to UserDto
-        UserDto savedUserDto = new UserDto(
-                savedUser.getId(),
-                savedUser.getFirstName(),
-                savedUser.getLastName(),
-                savedUser.getEmail()
-        );
+        UserDto savedUserDto =UserMapper.mapToUserDto(savedUser);
 
         return savedUserDto;
     }
 
     @Override
-    public User getUserById(Long userId) {
+    public UserDto getUserById(Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        return optionalUser.get();
+       User user= optionalUser.get();
+       return UserMapper.mapToUserDto(user);
 
     }
 
