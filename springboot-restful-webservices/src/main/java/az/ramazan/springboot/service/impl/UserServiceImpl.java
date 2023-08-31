@@ -2,6 +2,7 @@ package az.ramazan.springboot.service.impl;
 
 import az.ramazan.springboot.dto.UserDto;
 import az.ramazan.springboot.entity.User;
+import az.ramazan.springboot.exception.EmailAlreadyExistsException;
 import az.ramazan.springboot.exception.ResourceNotFoundException;
 import az.ramazan.springboot.mapper.AutoUserMapper;
 import az.ramazan.springboot.mapper.UserMapper;
@@ -27,6 +28,10 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto) {
         //Convert UserDto into User JPA Entity
         //User user = UserMapper.mapToUser(userDto);
+        Optional<User> optionalUser=userRepository.findByEmail(userDto.getEmail());
+        if (optionalUser.isPresent()){
+            throw new EmailAlreadyExistsException("Email Already exists for User");
+        }
         User user = AutoUserMapper.MAPPER.mapToUser(userDto);
         User savedUser = userRepository.save(user);
         //Convert User JPA entity to UserDto
