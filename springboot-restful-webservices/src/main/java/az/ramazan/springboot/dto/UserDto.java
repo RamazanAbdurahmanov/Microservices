@@ -20,6 +20,6 @@ public class UserDto {
     private String lastName;
 
     @NotEmpty(message = "User email should not be empty")
-    @Email(message = "UEMail address should be valid")
+    @Email(message = "User Email address should be valid")
     private String email;
 }
