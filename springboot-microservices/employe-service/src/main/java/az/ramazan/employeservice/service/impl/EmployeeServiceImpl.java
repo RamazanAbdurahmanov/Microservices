@@ -33,4 +33,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     }
+
+    @Override
+    public EmployeeDto getEmployeeById(Long employeId) {
+        EmployeeEntity employee = employeeRepository.findById(employeId).get();
+        EmployeeDto employeeDto = new EmployeeDto(
+                employee.getId(),
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getEmail()
+        );
+        return employeeDto;
+    }
+
 }
+
