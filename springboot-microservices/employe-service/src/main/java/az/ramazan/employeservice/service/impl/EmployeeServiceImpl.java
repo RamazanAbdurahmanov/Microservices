@@ -5,6 +5,7 @@ import az.ramazan.employeservice.dto.DepartmentDto;
 import az.ramazan.employeservice.dto.EmployeeDto;
 import az.ramazan.employeservice.entity.EmployeeEntity;
 import az.ramazan.employeservice.repository.EmployeeRepository;
+import az.ramazan.employeservice.service.APIClient;
 import az.ramazan.employeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     // private  RestTemplate restTemplate;
-    private WebClient webClient;
+   // private WebClient webClient;
+    private APIClient apiClient;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -49,12 +51,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 //      ResponseEntity<DepartmentDto> responseEntity= restTemplate.getForEntity("http://localhost:8080/api/departments/get/"
 //              + employee.getDepartmentCode(), DepartmentDto.class);
 //     DepartmentDto departmentDto= responseEntity.getBody();
-        DepartmentDto departmentDto = webClient.get()
-                .uri("http://localhost:8080/api/departments/get/"
-                        + employee.getDepartmentCode())
-                .retrieve()
-                .bodyToMono(DepartmentDto.class)
-                .block();
+
+//        DepartmentDto departmentDto = webClient.get()
+//                .uri("http://localhost:8080/api/departments/get/"
+//                        + employee.getDepartmentCode())
+//                .retrieve()
+//                .bodyToMono(DepartmentDto.class)
+//                .block();
+       DepartmentDto departmentDto= apiClient.getDepartment(employee.getDepartmentCode());
         EmployeeDto employeeDto = new EmployeeDto(
                 employee.getId(),
                 employee.getFirstName(),
